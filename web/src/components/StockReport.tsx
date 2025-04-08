@@ -26,7 +26,7 @@ export const StockReportView: React.FC = () => {
             setReport(data);
             setError('');
         } catch (err: any) {
-            setError(err.response?.data || 'Erro ao carregar relatório');
+            setError(err.response?.data || 'Error on loading report');
             setReport([]);
         }
     };
@@ -38,19 +38,19 @@ export const StockReportView: React.FC = () => {
     return (
         <Box sx={{ maxWidth: 800, mx: 'auto', mt: 4 }}>
             <Typography variant="h5" component="h2" gutterBottom>
-                Relatório de Estoque
+                Stock Report
             </Typography>
 
             <Box sx={{ display: 'flex', gap: 2, mb: 3 }}>
                 <TextField
-                    label="Data"
+                    label="Date"
                     type="date"
                     value={date}
                     onChange={(e) => setDate(e.target.value)}
                     InputLabelProps={{ shrink: true }}
                 />
                 <TextField
-                    label="Código do Produto"
+                    label="Product Code"
                     value={productCode}
                     onChange={(e) => setProductCode(e.target.value)}
                 />
@@ -66,11 +66,11 @@ export const StockReportView: React.FC = () => {
                 <Table>
                     <TableHead>
                         <TableRow>
-                            <TableCell>Produto</TableCell>
-                            <TableCell>Código</TableCell>
-                            <TableCell align="right">Entradas</TableCell>
-                            <TableCell align="right">Saídas</TableCell>
-                            <TableCell align="right">Saldo</TableCell>
+                            <TableCell>Product</TableCell>
+                            <TableCell>Code</TableCell>
+                            <TableCell align="right">In</TableCell>
+                            <TableCell align="right">Out</TableCell>
+                            <TableCell align="right">Balance</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>

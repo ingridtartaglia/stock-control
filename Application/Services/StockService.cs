@@ -16,12 +16,12 @@ namespace Application.Services {
         public async Task<StockMovementDTO> AddMovementAsync(StockMovementDTO movementDto) {
             var product = await _productRepository.GetByCodeAsync(movementDto.ProductCode);
             if (product == null)
-                throw new ArgumentException("Produto não encontrado");
+                throw new ArgumentException("Product not found");
 
             var currentStock = await _stockMovementRepository.GetCurrentStockAsync(product.Id);
 
             if (movementDto.Type == MovementType.Out && currentStock < movementDto.Quantity)
-                throw new InvalidOperationException("Quantidade insuficiente em estoque");
+                throw new InvalidOperationException("Insufficient quantity in stock");
 
             var movement = new StockMovement {
                 Product = product,
@@ -39,16 +39,19 @@ namespace Application.Services {
             var movements = await _stockMovementRepository.GetMovementsByDateAsync(date, productCode);
             var products = await _productRepository.GetAllAsync();
 
-            var report = from p in products
-                         join m in movements on p.Id equals m.ProductId into productMovements
-                         select new StockReportDTO {
-                             ProductName = p.Name,
-                             ProductCode = p.Code,
-                             TotalIn = productMovements.Where(m => m.Type == MovementType.In).Sum(m => m.Quantity),
-                             TotalOut = productMovements.Where(m => m.Type == MovementType.Out).Sum(m => m.Quantity),
-                             Balance = productMovements.Where(m => m.Type == MovementType.In).Sum(m => m.Quantity) -
-                                     productMovements.Where(m => m.Type == MovementType.Out).Sum(m => m.Quantity)
-                         };
+            var report = products.Select(p => {
+                var productMovements = movements.Where(m => m.ProductId == p.Id);
+                var totalIn = productMovements.Where(m => m.Type == MovementType.In).Sum(m => m.Quantity);
+                var totalOut = productMovements.Where(m => m.Type == MovementType.Out).Sum(m => m.Quantity);
+
+                return new StockReportDTO {
+                    ProductName = p.Name,
+                    ProductCode = p.Code,
+                    TotalIn = totalIn,
+                    TotalOut = totalOut,
+                    Balance = totalIn - totalOut
+                };
+            });
 
             return report.ToList();
         }

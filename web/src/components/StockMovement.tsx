@@ -35,14 +35,14 @@ export const StockMovementForm: React.FC = () => {
                 quantity: 0
             });
         } catch (err: any) {
-            setError(err.response?.data || 'Erro ao adicionar movimentação');
+            setError(err.response?.data || 'Error on adding movement');
         }
     };
 
     return (
         <Box component="form" onSubmit={handleSubmit} sx={{ maxWidth: 400, mx: 'auto', mt: 4 }}>
             <Typography variant="h5" component="h2" gutterBottom>
-                Movimentação de Estoque
+                Stock Movement
             </Typography>
 
             {error && (
@@ -53,13 +53,13 @@ export const StockMovementForm: React.FC = () => {
 
             {success && (
                 <Alert severity="success" sx={{ mb: 2 }}>
-                    Movimentação adicionada com sucesso!
+                    Movement added successfully!
                 </Alert>
             )}
 
             <TextField
                 fullWidth
-                label="Código do Produto"
+                label="Product Code"
                 value={movement.productCode}
                 onChange={(e) => setMovement({ ...movement, productCode: e.target.value })}
                 margin="normal"
@@ -67,20 +67,20 @@ export const StockMovementForm: React.FC = () => {
             />
 
             <FormControl fullWidth margin="normal">
-                <InputLabel>Tipo</InputLabel>
+                <InputLabel>Type</InputLabel>
                 <Select
                     value={movement.type}
-                    label="Tipo"
+                    label="Type"
                     onChange={(e) => setMovement({ ...movement, type: e.target.value as 'In' | 'Out' })}
                 >
-                    <MenuItem value="In">Entrada</MenuItem>
-                    <MenuItem value="Out">Saída</MenuItem>
+                    <MenuItem value="In">In</MenuItem>
+                    <MenuItem value="Out">Out</MenuItem>
                 </Select>
             </FormControl>
 
             <TextField
                 fullWidth
-                label="Quantidade"
+                label="Quantity"
                 type="number"
                 value={movement.quantity}
                 onChange={(e) => setMovement({ ...movement, quantity: parseInt(e.target.value) })}
@@ -95,7 +95,7 @@ export const StockMovementForm: React.FC = () => {
                 fullWidth
                 sx={{ mt: 2 }}
             >
-                Adicionar Movimentação
+                Add Movement
             </Button>
         </Box>
     );

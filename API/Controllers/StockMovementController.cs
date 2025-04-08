@@ -4,15 +4,15 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers {
     [ApiController]
-    [Route("api/[controller]")]
-    public class StockMovementController : ControllerBase {
+    [Route("api/stock")]
+    public class StockController : ControllerBase {
         private readonly IStockService _stockService;
 
-        public StockMovementController(IStockService stockService) {
+        public StockController(IStockService stockService) {
             _stockService = stockService;
         }
 
-        [HttpPost("movement")]
+        [HttpPost("movements")]
         public async Task<ActionResult<StockMovementDTO>> AddMovement([FromBody] StockMovementDTO movementDto) {
             try {
                 var result = await _stockService.AddMovementAsync(movementDto);
@@ -24,7 +24,7 @@ namespace API.Controllers {
             }
         }
 
-        [HttpGet("report")]
+        [HttpGet("reports")]
         public async Task<ActionResult<IEnumerable<StockReportDTO>>> GetStockReport([FromQuery] DateTime date, [FromQuery] string productCode) {
             var report = await _stockService.GetStockReportAsync(date, productCode);
             return Ok(report);

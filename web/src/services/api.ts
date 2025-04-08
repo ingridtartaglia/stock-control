@@ -20,11 +20,11 @@ export interface StockReport {
 
 export const stockService = {
     addMovement: async (movement: StockMovement) => {
-        const response = await api.post<StockMovement>('/StockMovement/movement', movement);
+        const response = await api.post<StockMovement>('/stock/movements', movement);
         return response.data;
     },
     getStockReport: async (date: string, productCode?: string) => {
-        const response = await api.get<StockReport[]>('/StockMovement/report', {
+        const response = await api.get<StockReport[]>('/stock/reports', {
             params: { date, productCode }
         });
         return response.data;

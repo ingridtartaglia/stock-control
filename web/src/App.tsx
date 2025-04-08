@@ -10,13 +10,13 @@ function App() {
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Controle de Estoque
+            Stock Control
           </Typography>
           <Button color="inherit" component={Link} to="/">
-            Movimentação
+            Movement
           </Button>
           <Button color="inherit" component={Link} to="/report">
-            Relatório
+            Report
           </Button>
         </Toolbar>
       </AppBar>
