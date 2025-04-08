@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Add services to the container
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
@@ -23,8 +23,7 @@ builder.Services.AddScoped<IStockMovementRepository, StockMovementRepository>();
 builder.Services.AddScoped<IStockService, StockService>();
 
 // Configure CORS
-builder.Services.AddCors(options =>
-{
+builder.Services.AddCors(options => {
     options.AddPolicy("AllowReactApp",
         builder => builder
             .WithOrigins("http://localhost:3000", "https://localhost:3000")
@@ -40,15 +39,11 @@ app.UseAuthorization();
 app.MapControllers();
 
 // Seed data
-using (var scope = app.Services.CreateScope())
-{   
-    try
-    {
+using (var scope = app.Services.CreateScope()) {
+    try {
         var context = scope.ServiceProvider.GetRequiredService<StockControlContext>();
         DbInitializer.Initialize(context);
-    }
-    catch (Exception ex)
-    {
+    } catch (Exception ex) {
         var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
         logger.LogError(ex, "An error occurred while seeding the database.");
     }

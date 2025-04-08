@@ -1,20 +1,16 @@
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Data
-{
-    public class StockControlContext : DbContext
-    {
+namespace Infrastructure.Data {
+    public class StockControlContext : DbContext {
         public StockControlContext(DbContextOptions<StockControlContext> options)
-            : base(options)
-        {
+            : base(options) {
         }
 
         public DbSet<Product> Products { get; set; }
         public DbSet<StockMovement> StockMovements { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
+        protected override void OnModelCreating(ModelBuilder modelBuilder) {
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Product>()
@@ -27,4 +23,4 @@ namespace Infrastructure.Data
                 .HasForeignKey(sm => sm.ProductId);
         }
     }
-} 
+}
