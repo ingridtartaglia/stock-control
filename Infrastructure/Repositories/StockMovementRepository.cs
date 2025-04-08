@@ -29,7 +29,7 @@ namespace Infrastructure.Repositories {
             return await query.ToListAsync();
         }
 
-        public async Task<int> GetCurrentStockAsync(int productId) {
+        public async Task<int> GetCurrentStockAsync(Guid productId) {
             var movements = await _context.StockMovements
                 .Where(sm => sm.ProductId == productId)
                 .ToListAsync();
