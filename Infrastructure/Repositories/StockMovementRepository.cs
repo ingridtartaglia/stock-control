@@ -17,7 +17,7 @@ namespace Infrastructure.Repositories {
             return movement;
         }
 
-        public async Task<IEnumerable<StockMovement>> GetMovementsByDateAsync(DateTime date, string productCode) {
+        public async Task<IEnumerable<StockMovement>> GetMovementsByDateAsync(DateTime date, string? productCode = null) {
             var query = _context.StockMovements
                 .Include(sm => sm.Product)
                 .Where(sm => sm.CreatedAt.Date == date.Date);

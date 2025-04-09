@@ -13,7 +13,11 @@ namespace API.Controllers {
         }
 
         [HttpPost("movements")]
-        public async Task<ActionResult<StockMovementDTO>> AddMovement([FromBody] StockMovementDTO movementDto) {
+        public async Task<ActionResult<StockMovementDTO>> AddMovement([FromBody] StockMovementDTO? movementDto) {
+            if (movementDto == null) {
+                return BadRequest("Movement data is required");
+            }
+
             try {
                 var result = await _stockService.AddMovementAsync(movementDto);
                 return Ok(result);
@@ -25,7 +29,7 @@ namespace API.Controllers {
         }
 
         [HttpGet("reports")]
-        public async Task<ActionResult<IEnumerable<StockReportDTO>>> GetStockReport([FromQuery] DateTime date, [FromQuery] string productCode) {
+        public async Task<ActionResult<IEnumerable<StockReportDTO>>> GetStockReport([FromQuery] DateTime date, [FromQuery] string? productCode = null) {
             var report = await _stockService.GetStockReportAsync(date, productCode);
             return Ok(report);
         }

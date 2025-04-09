@@ -35,9 +35,13 @@ namespace Application.Services {
             return movementDto;
         }
 
-        public async Task<IEnumerable<StockReportDTO>> GetStockReportAsync(DateTime date, string productCode) {
+        public async Task<IEnumerable<StockReportDTO>> GetStockReportAsync(DateTime date, string? productCode = null) {
             var movements = await _stockMovementRepository.GetMovementsByDateAsync(date, productCode);
             var products = await _productRepository.GetAllAsync();
+
+            if (!string.IsNullOrEmpty(productCode)) {
+                products = products.Where(p => p.Code == productCode);
+            }
 
             var report = products.Select(p => {
                 var productMovements = movements.Where(m => m.ProductId == p.Id);
