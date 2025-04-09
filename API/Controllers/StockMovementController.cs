@@ -5,10 +5,10 @@ using Microsoft.AspNetCore.Mvc;
 namespace API.Controllers {
     [ApiController]
     [Route("api/stock")]
-    public class StockController : ControllerBase {
+    public class StockMovementController : ControllerBase {
         private readonly IStockService _stockService;
 
-        public StockController(IStockService stockService) {
+        public StockMovementController(IStockService stockService) {
             _stockService = stockService;
         }
 

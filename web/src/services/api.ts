@@ -23,6 +23,12 @@ api.interceptors.response.use(
     }
 );
 
+export interface Product {
+    id: string;
+    name: string;
+    code: string;
+}
+
 export interface StockMovement {
     productCode: string;
     type: 'In' | 'Out';
@@ -51,6 +57,10 @@ export const stockService = {
                 productCode: productCode || undefined 
             }
         });
+        return response.data;
+    },
+    getProducts: async () => {
+        const response = await api.get<Product[]>('/products');
         return response.data;
     }
 };

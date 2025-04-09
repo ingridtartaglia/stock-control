@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     Box,
     Button,
@@ -10,7 +10,7 @@ import {
     Typography,
     Alert
 } from '@mui/material';
-import { stockService, StockMovement } from '../services/api';
+import { stockService, StockMovement, Product } from '../services/api';
 
 export const StockMovementForm: React.FC = () => {
     const [movement, setMovement] = useState<StockMovement>({
@@ -18,8 +18,22 @@ export const StockMovementForm: React.FC = () => {
         type: 'In',
         quantity: 0
     });
+    const [products, setProducts] = useState<Product[]>([]);
     const [error, setError] = useState<string>('');
     const [success, setSuccess] = useState<boolean>(false);
+
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                const productsList = await stockService.getProducts();
+                setProducts(productsList);
+            } catch (err: any) {
+                setError(err.message || 'Error loading products');
+            }
+        };
+
+        fetchProducts();
+    }, []);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -67,14 +81,23 @@ export const StockMovementForm: React.FC = () => {
                 </Alert>
             )}
 
-            <TextField
-                fullWidth
-                label="Product Code"
-                value={movement.productCode}
-                onChange={(e) => setMovement({ ...movement, productCode: e.target.value })}
-                margin="normal"
-                required
-            />
+            <FormControl fullWidth margin="normal" required>
+                <InputLabel>Product</InputLabel>
+                <Select
+                    value={movement.productCode}
+                    label="Product"
+                    onChange={(e) => setMovement({ ...movement, productCode: e.target.value })}
+                >
+                    <MenuItem value="">
+                        <em>Select a product</em>
+                    </MenuItem>
+                    {products.map((product) => (
+                        <MenuItem key={product.id} value={product.code}>
+                            {product.name} ({product.code})
+                        </MenuItem>
+                    ))}
+                </Select>
+            </FormControl>
 
             <FormControl fullWidth margin="normal">
                 <InputLabel>Type</InputLabel>
@@ -93,9 +116,15 @@ export const StockMovementForm: React.FC = () => {
                 label="Quantity"
                 type="number"
                 value={movement.quantity}
-                onChange={(e) => setMovement({ ...movement, quantity: parseInt(e.target.value) })}
+                onChange={(e) => {
+                    const value = parseInt(e.target.value);
+                    if (value > 0) {
+                        setMovement({ ...movement, quantity: value });
+                    }
+                }}
                 margin="normal"
                 required
+                inputProps={{ min: 1 }}
             />
 
             <Button
