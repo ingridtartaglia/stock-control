@@ -18,6 +18,9 @@ namespace Application.Services {
             if (product == null)
                 throw new ArgumentException("Product not found");
 
+            if (movementDto.Quantity <= 0)
+                throw new InvalidOperationException("Quantity must be greater than zero");
+
             var currentStock = await _stockMovementRepository.GetCurrentStockAsync(product.Id);
 
             if (movementDto.Type == MovementType.Out && currentStock < movementDto.Quantity)

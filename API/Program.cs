@@ -36,16 +36,14 @@ builder.Services.AddCors(options => {
 var app = builder.Build();
 
 // Configure the HTTP request pipeline
-if (app.Environment.IsDevelopment())
-{
+if (app.Environment.IsDevelopment()) {
     app.UseDeveloperExceptionPage();
 }
 
 app.UseCors("AllowReactApp");
 
 // Only use HTTPS redirection in production
-if (!app.Environment.IsDevelopment())
-{
+if (!app.Environment.IsDevelopment()) {
     app.UseHttpsRedirection();
 }
 

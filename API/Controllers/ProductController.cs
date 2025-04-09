@@ -1,6 +1,6 @@
-using Microsoft.AspNetCore.Mvc;
 using Domain.Entities;
 using Domain.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers {
     [ApiController]
@@ -18,4 +18,4 @@ namespace API.Controllers {
             return Ok(products);
         }
     }
-} 
+}
