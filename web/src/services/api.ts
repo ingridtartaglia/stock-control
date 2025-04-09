@@ -11,7 +11,7 @@ api.interceptors.response.use(
         if (error.response) {
             // The request was made and the server responded with a status code
             // that falls out of the range of 2xx
-            const errorMessage = error.response.data?.title || error.response.data?.detail || 'An error occurred';
+            const errorMessage = error.response.data?.title || error.response.data?.detail || error.response.data || 'An error occurred';
             return Promise.reject(new Error(errorMessage));
         } else if (error.request) {
             // The request was made but no response was received

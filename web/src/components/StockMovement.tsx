@@ -26,6 +26,16 @@ export const StockMovementForm: React.FC = () => {
         setError('');
         setSuccess(false);
 
+        if (movement.quantity <= 0) {
+            setError('Quantity must be greater than zero');
+            return;
+        }
+
+        if (!movement.productCode) {
+            setError('Please select a product');
+            return;
+        }
+
         try {
             await stockService.addMovement(movement);
             setSuccess(true);
@@ -35,7 +45,7 @@ export const StockMovementForm: React.FC = () => {
                 quantity: 0
             });
         } catch (err: any) {
-            setError(err.response?.data || 'Error on adding movement');
+            setError(err.response?.data?.title || err.response?.data || err.message || 'Error on adding movement');
         }
     };
 

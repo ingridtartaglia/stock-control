@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
     Box,
     TextField,
@@ -10,7 +10,8 @@ import {
     TableHead,
     TableRow,
     Paper,
-    Alert
+    Alert,
+    Button
 } from '@mui/material';
 import { stockService, StockReport } from '../services/api';
 
@@ -19,21 +20,20 @@ export const StockReportView: React.FC = () => {
     const [productCode, setProductCode] = useState<string>('');
     const [report, setReport] = useState<StockReport[]>([]);
     const [error, setError] = useState<string>('');
+    const [hasSearched, setHasSearched] = useState<boolean>(false);
 
     const fetchReport = async () => {
         try {
             const data = await stockService.getStockReport(date, productCode || undefined);
             setReport(data);
             setError('');
+            setHasSearched(true);
         } catch (err: any) {
-            setError(err.response?.data || 'Error on loading report');
+            setError(err.message || 'Error on loading report');
             setReport([]);
+            setHasSearched(true);
         }
     };
-
-    useEffect(() => {
-        fetchReport();
-    }, [date, productCode]);
 
     return (
         <Box sx={{ maxWidth: 800, mx: 'auto', mt: 4 }}>
@@ -54,6 +54,13 @@ export const StockReportView: React.FC = () => {
                     value={productCode}
                     onChange={(e) => setProductCode(e.target.value)}
                 />
+                <Button
+                    variant="contained"
+                    onClick={fetchReport}
+                    sx={{ minWidth: 120 }}
+                >
+                    Search
+                </Button>
             </Box>
 
             {error && (
@@ -62,30 +69,32 @@ export const StockReportView: React.FC = () => {
                 </Alert>
             )}
 
-            <TableContainer component={Paper}>
-                <Table>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Product</TableCell>
-                            <TableCell>Code</TableCell>
-                            <TableCell align="right">In</TableCell>
-                            <TableCell align="right">Out</TableCell>
-                            <TableCell align="right">Balance</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {report.map((row) => (
-                            <TableRow key={row.productCode}>
-                                <TableCell>{row.productName}</TableCell>
-                                <TableCell>{row.productCode}</TableCell>
-                                <TableCell align="right">{row.totalIn}</TableCell>
-                                <TableCell align="right">{row.totalOut}</TableCell>
-                                <TableCell align="right">{row.balance}</TableCell>
+            {hasSearched && (
+                <TableContainer component={Paper}>
+                    <Table>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>Product</TableCell>
+                                <TableCell>Code</TableCell>
+                                <TableCell align="right">In</TableCell>
+                                <TableCell align="right">Out</TableCell>
+                                <TableCell align="right">Balance</TableCell>
                             </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
+                        </TableHead>
+                        <TableBody>
+                            {report.map((row) => (
+                                <TableRow key={row.productCode}>
+                                    <TableCell>{row.productName}</TableCell>
+                                    <TableCell>{row.productCode}</TableCell>
+                                    <TableCell align="right">{row.totalIn}</TableCell>
+                                    <TableCell align="right">{row.totalOut}</TableCell>
+                                    <TableCell align="right">{row.balance}</TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+            )}
         </Box>
     );
 };
