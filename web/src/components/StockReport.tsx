@@ -14,8 +14,10 @@ import {
     Button
 } from '@mui/material';
 import { stockService, StockReport } from '../services/api';
+import { useTranslation } from 'react-i18next';
 
 export const StockReportView: React.FC = () => {
+    const { t } = useTranslation();
     const [date, setDate] = useState<string>(new Date().toISOString().split('T')[0]);
     const [productCode, setProductCode] = useState<string>('');
     const [report, setReport] = useState<StockReport[]>([]);
@@ -29,7 +31,7 @@ export const StockReportView: React.FC = () => {
             setError('');
             setHasSearched(true);
         } catch (err: any) {
-            setError(err.message || 'Error on loading report');
+            setError(t('stock.report.errors.loading'));
             setReport([]);
             setHasSearched(true);
         }
@@ -38,19 +40,19 @@ export const StockReportView: React.FC = () => {
     return (
         <Box sx={{ maxWidth: 800, mx: 'auto', mt: 4 }}>
             <Typography variant="h5" component="h2" gutterBottom>
-                Stock Report
+                {t('stock.report.title')}
             </Typography>
 
             <Box sx={{ display: 'flex', gap: 2, mb: 3 }}>
                 <TextField
-                    label="Date"
+                    label={t('stock.report.date')}
                     type="date"
                     value={date}
                     onChange={(e) => setDate(e.target.value)}
                     InputLabelProps={{ shrink: true }}
                 />
                 <TextField
-                    label="Product Code"
+                    label={t('stock.report.product-code')}
                     value={productCode}
                     onChange={(e) => setProductCode(e.target.value)}
                 />
@@ -59,7 +61,7 @@ export const StockReportView: React.FC = () => {
                     onClick={fetchReport}
                     sx={{ minWidth: 120 }}
                 >
-                    Search
+                    {t('stock.report.search')}
                 </Button>
             </Box>
 
@@ -74,11 +76,11 @@ export const StockReportView: React.FC = () => {
                     <Table>
                         <TableHead>
                             <TableRow>
-                                <TableCell>Product</TableCell>
-                                <TableCell>Code</TableCell>
-                                <TableCell align="right">In</TableCell>
-                                <TableCell align="right">Out</TableCell>
-                                <TableCell align="right">Balance</TableCell>
+                                <TableCell>{t('stock.report.table.product')}</TableCell>
+                                <TableCell>{t('stock.report.table.code')}</TableCell>
+                                <TableCell align="right">{t('stock.report.table.in')}</TableCell>
+                                <TableCell align="right">{t('stock.report.table.out')}</TableCell>
+                                <TableCell align="right">{t('stock.report.table.balance')}</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
