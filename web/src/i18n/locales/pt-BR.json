@@ -1,0 +1,43 @@
+{
+  "common": {
+    "stock-control": "Controle de estoque",
+    "movement": "Movimentação",
+    "report": "Relatório"
+  },
+  "stock": {
+    "movement": {
+      "title": "Movimentação de estoque",
+      "product": "Produto",
+      "select-product": "Selecione um produto",
+      "type": "Tipo",
+      "quantity": "Quantidade",
+      "add-success": "Movimentação adicionada com sucesso!",
+      "in": "Entrada",
+      "out": "Saída",
+      "save": "Salvar",
+      "errors": {
+        "quantity-zero": "A quantidade deve ser maior que zero",
+        "select-product": "Por favor, selecione um produto",
+        "loading-products": "Erro ao carregar produtos",
+        "add-movement": "Erro ao salvar movimentação",
+        "insufficient-quantity": "Quantidade insuficiente em estoque"
+      }
+    },
+    "report": {
+      "title": "Relatório de estoque",
+      "date": "Data",
+      "product-code": "Código do produto",
+      "search": "Pesquisar",
+      "table": {
+        "product": "Produto",
+        "code": "Código",
+        "in": "Entrada",
+        "out": "Saída",
+        "balance": "Saldo"
+      },
+      "errors": {
+        "loading": "Erro ao carregar relatório"
+      }
+    }
+  }
+} 

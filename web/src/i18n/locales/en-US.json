@@ -1,0 +1,43 @@
+{
+  "common": {
+    "stock-control": "Stock Control",
+    "movement": "Movement",
+    "report": "Report"
+  },
+  "stock": {
+    "movement": {
+      "title": "Stock movement",
+      "product": "Product",
+      "select-product": "Select a product",
+      "type": "Type",
+      "quantity": "Quantity",
+      "add-success": "Movement added successfully!",
+      "in": "In",
+      "out": "Out",
+      "save": "Save",
+      "errors": {
+        "quantity-zero": "Quantity must be greater than zero",
+        "select-product": "Please select a product",
+        "loading-products": "Error loading products",
+        "add-movement": "Error while adding movement",
+        "insufficient-quantity": "Insufficient quantity in stock"
+      }
+    },
+    "report": {
+      "title": "Stock report",
+      "date": "Date",
+      "product-code": "Product code",
+      "search": "Search",
+      "table": {
+        "product": "Product",
+        "code": "Code",
+        "in": "In",
+        "out": "Out",
+        "balance": "Balance"
+      },
+      "errors": {
+        "loading": "Error on loading report"
+      }
+    }
+  }
+} 
