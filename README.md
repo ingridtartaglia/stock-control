@@ -12,7 +12,7 @@ A system for managing stock movements and generating stock reports.
 ## Technologies
 
 ### Backend
-- .NET 8
+- .NET 9
 - Entity Framework Core
 - SQL Server
 - Clean Architecture
@@ -21,8 +21,9 @@ A system for managing stock movements and generating stock reports.
 ### Frontend
 - React
 - TypeScript
-- Tailwind CSS
+- Material UI
 - Axios
+- i18next
 
 ## Project Structure
 
@@ -31,13 +32,14 @@ A system for managing stock movements and generating stock reports.
 ├── Application/         # Application layer
 ├── Domain/             # Domain layer
 ├── Infrastructure/     # Infrastructure layer
+├── Test/               # Test layer
 └── web/               # Frontend React application
 ```
 
 ## Getting Started
 
 ### Prerequisites
-- .NET 8 SDK
+- .NET 9 SDK
 - Node.js
 - SQL Server (LocalDB)
 
